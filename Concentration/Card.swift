@@ -10,6 +10,7 @@ import Foundation
 
 struct Card
 {
+    
     var isFaceUp = false
     var isMatches = false
     var numFlips = 0

@@ -12,8 +12,6 @@ class ViewController: UIViewController
 {
     lazy var game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
 
-    var theme = Int()
-
     var emojiChoices = [String]()
 
     var colors = [Any]()
@@ -98,18 +96,33 @@ class ViewController: UIViewController
     {
         if emoji[card.identifier] == nil, (emojiChoices.count) > 0
         {
-            let randomIndex = Int(arc4random_uniform(UInt32(emojiChoices.count)))
-            emoji[card.identifier] = emojiChoices.remove(at: randomIndex)
+            emoji[card.identifier] = emojiChoices.remove(at: emojiChoices.count.arc4random)
         }
         return emoji[card.identifier] ?? "?"
     }
     
     func randomeTheme()
     {
-        theme = Int(arc4random_uniform(UInt32(colorTheme.count)))
+        let theme = colorTheme.count.arc4random
         emojiChoices = emojiTheme[theme]!
         colors = colorTheme[theme]!
     }
 
 }
 
+extension Int
+{
+    var arc4random: Int
+    {
+        if self > 0
+        {
+            return Int(arc4random_uniform(UInt32(self)))
+        }else if self < 0
+        {
+            return -Int(arc4random_uniform(UInt32(abs(self))))
+        }else
+        {
+            return 0
+        }
+    }
+}
